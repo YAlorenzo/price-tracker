@@ -35,12 +35,12 @@ export async function scrapeAmazonProduct(url: string) {
       $(".a.size.base.a-color-price"),
       $(".a-button-selected .a-color-base"),
       $("span.a-offscreen")
-      );
-      
-      const originalPrice = extractPrice(
-          $('#priceblock_ourprice'),
-          $('.a-price.a-text-price span.a-offscreen')
-      )
+    );
+
+    const originalPrice = extractPrice(
+      $("#priceblock_ourprice"),
+      $(".a-price.a-text-price span.a-offscreen")
+    );
 
     console.log({ title, currentPrice });
   } catch (error: any) {
