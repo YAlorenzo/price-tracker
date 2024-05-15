@@ -1,12 +1,13 @@
 "use server";
 
-import { revalidatePath } from "next/cache";  
+import { revalidatePath } from "next/cache";
 import Product from "../models/product.model";
 import { connectToDB } from "../mongoose";
 import { scrapeAmazonProduct } from "../scraper";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
-import { generateEmailBody, sendEmail } from "../nodemailer";
 import { User } from "@/types";
+import { generateEmailBody, sendEmail } from "../nodemailer";
+import { redirect } from "next/navigation";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
   if (!productUrl) return;
@@ -15,6 +16,7 @@ export async function scrapeAndStoreProduct(productUrl: string) {
     connectToDB();
 
     const scrapedProduct = await scrapeAmazonProduct(productUrl);
+
     if (!scrapedProduct) return;
 
     let product = scrapedProduct;
@@ -40,27 +42,26 @@ export async function scrapeAndStoreProduct(productUrl: string) {
       { url: scrapedProduct.url },
       product,
       { upsert: true, new: true }
-      );
-      revalidatePath(`/product/${newProduct._id}`);
-      
+    );
+
+    revalidatePath(`/products/${newProduct._id}`);
   } catch (error: any) {
     throw new Error(`Failed to create/update product: ${error.message}`);
   }
 }
 
-
 export async function getProductById(productId: string) {
-    try {
-        connectToDB();
+  try {
+    connectToDB();
 
-        const product = await Product.findOne({ _id: productId });
+    const product = await Product.findOne({ _id: productId });
 
-        if (!product) return null;
+    if (!product) return null;
 
-        return product;
-    } catch (error) {
-        console.log(error);
-    }
+    return product;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function getAllProducts() {
@@ -70,7 +71,6 @@ export async function getAllProducts() {
     const products = await Product.find();
 
     return products;
-    
   } catch (error) {
     console.log(error);
   }
@@ -84,10 +84,11 @@ export async function getSimilarProducts(productId: string) {
 
     if (!currentProduct) return null;
 
-    const similarProducts = await Product.find({ _id: { $ne: productId } }).limit(3);
+    const similarProducts = await Product.find({
+      _id: { $ne: productId },
+    }).limit(3);
 
     return similarProducts;
-    
   } catch (error) {
     console.log(error);
   }

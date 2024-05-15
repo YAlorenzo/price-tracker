@@ -1,6 +1,7 @@
 "use client";
 
 import { scrapeAndStoreProduct } from "@/lib/actions";
+import { redirect } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 const isValidAmaazonProductURL = (url: string) => {
@@ -21,7 +22,7 @@ const isValidAmaazonProductURL = (url: string) => {
   return false;
 };
 
-const Searchbar = () => {
+const Searchbar = ({  }) => {
   const [searchPrompt, setsearchPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,6 +37,8 @@ const Searchbar = () => {
       setIsLoading(true);
 
       const product = await scrapeAndStoreProduct(searchPrompt);
+
+     
     } catch (error) {
       console.log(error)
     }
@@ -47,13 +50,17 @@ const Searchbar = () => {
     <form className="flex flex-wrap gap-4 mt-12" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Enter product link"
+        placeholder="Enter amazon product link"
         className="searchbar-input"
         value={searchPrompt}
         onChange={(e) => setsearchPrompt(e.target.value)}
       />
 
-      <button type="submit" className="searchbar-btn" disabled={searchPrompt === ''}>
+      <button
+        type="submit"
+        className="searchbar-btn"
+        disabled={searchPrompt === ""}
+      >
         {isLoading ? "Searching..." : "Search"}
       </button>
     </form>

@@ -7,7 +7,6 @@ import { Product } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import React from "react";
 
 type Props = {
   params: { id: string };
@@ -32,12 +31,14 @@ const ProductDetails = async ({ params: { id } }: Props) => {
             className="mx-auto"
           />
         </div>
+
         <div className="flex-1 flex flex-col">
           <div className="flex justify-between items-start gap-5 flex-wrap pb-6">
             <div className="flex flex-col gap-3">
               <p className="text-[28px] text-secondary font-semibold">
                 {product.title}
               </p>
+
               <Link
                 href={product.url}
                 target="_blank"
@@ -46,6 +47,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                 Visit Product
               </Link>
             </div>
+
             <div className="flex items-center gap-3">
               <div className="product-hearts">
                 <Image
@@ -54,10 +56,12 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                   width={20}
                   height={20}
                 />
+
                 <p className="text-base font-semibold text-[#D46F77]">
                   {product.reviewsCount}
                 </p>
               </div>
+
               <div className="p-2 bg-white-200 rounded-10">
                 <Image
                   src="/assets/icons/bookmark.svg"
@@ -66,6 +70,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                   height={20}
                 />
               </div>
+
               <div className="p-2 bg-white-200 rounded-10">
                 <Image
                   src="/assets/icons/share.svg"
@@ -76,15 +81,20 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </div>
             </div>
           </div>
+
           <div className="product-info">
             <div className="flex flex-col gap-2">
               <p className="text-[34px] text-secondary font-bold">
                 {product.currency} {formatNumber(product.currentPrice)}
               </p>
-              <p className="text-[21px] text-black opacity-50 line-through">
-                {product.currency} {formatNumber(product.originalPrice)}
-              </p>
+
+              {product.currentPrice !== product.originalPrice && (
+                <p className="text-[21px] text-black opacity-50 line-through">
+                  {product.currency} {formatNumber(product.originalPrice)}
+                </p>
+              )}
             </div>
+
             <div className="flex flex-col gap-4">
               <div className="flex gap-3">
                 <div className="product-stars">
@@ -118,6 +128,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </p>
             </div>
           </div>
+
           <div className="my-7 flex flex-col gap-5">
             <div className="flex gap-5 flex-wrap">
               <PriceInfoCard
@@ -126,7 +137,6 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                 value={`${product.currency} ${formatNumber(
                   product.currentPrice
                 )}`}
-                borderColor="#b6dbff"
               />
               <PriceInfoCard
                 title="Average Price"
@@ -134,7 +144,6 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                 value={`${product.currency} ${formatNumber(
                   product.averagePrice
                 )}`}
-                borderColor="#b6dbff"
               />
               <PriceInfoCard
                 title="Highest Price"
@@ -142,39 +151,41 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                 value={`${product.currency} ${formatNumber(
                   product.highestPrice
                 )}`}
-                borderColor="#b6dbff"
               />
               <PriceInfoCard
-                title="Lowes Price"
+                title="Lowest Price"
                 iconSrc="/assets/icons/arrow-down.svg"
                 value={`${product.currency} ${formatNumber(
                   product.lowestPrice
                 )}`}
-                borderColor="#BEFFC5"
               />
             </div>
           </div>
-          <Modal productId={id}/>
+
+          <Modal productId={id} />
         </div>
       </div>
 
-      <div className="flex flex-col gap-16 border-l-black">
+      <div className="flex flex-col gap-16">
         <div className="flex flex-col gap-5">
           <h3 className="text-2xl text-secondary font-semibold">
             Product Description
           </h3>
+
           <div className="flex flex-col gap-4">
             {product?.description?.split("\n")}
           </div>
         </div>
+
         <button className="btn w-fit mx-auto flex items-center justify-center gap-3 min-w-[200px]">
           <Image
             src="/assets/icons/bag.svg"
-            alt="chek"
+            alt="check"
             width={22}
             height={22}
           />
-          <Link href="/" className="text-base text-white">
+
+          <Link href={product.url} className="text-base text-white">
             Buy Now
           </Link>
         </button>
