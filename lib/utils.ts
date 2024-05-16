@@ -22,7 +22,6 @@ export function extractPrice(...elements: any) {
       if (cleanPrice) {
         firstPrice = cleanPrice.match(/\d+\.\d{2}/)?.[0];
       }
-
       return firstPrice || cleanPrice;
     }
   }
@@ -126,7 +125,10 @@ export const getEmailNotifType = (
   return null;
 };
 
-export const formatNumber = (num: number = 0) => {
+export const formatNumber = (num: number | null = 0) => {
+  if (num === null) {
+    return "0"; // или любое другое значение по вашему усмотрению
+  }
   return num.toLocaleString(undefined, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,

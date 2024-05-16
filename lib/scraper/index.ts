@@ -7,7 +7,6 @@ import { extractCurrency, extractDescription, extractPrice } from "../utils";
 export async function scrapeAmazonProduct(url: string) {
   if (!url) return;
 
-
   const username = String(process.env.BRIGHT_DATA_USERNAME);
   const password = String(process.env.BRIGHT_DATA_PASSWORD);
   const port = 22225;
@@ -39,7 +38,11 @@ export async function scrapeAmazonProduct(url: string) {
       $(".a-price.a-text-price span.a-offscreen"),
       $("#listPrice"),
       $("#priceblock_dealprice"),
-      $(".a-size-base.a-color-price")
+      $(".a-size-base.a-color-price"),
+      $("td.a-color-secondary.a-size-base"),
+      $("span.a-price.a-text-price.a-size-base"),
+      $("span.a-offscreen"),
+      $("span.a-size-base.a-color-price")
     );
 
     const outOfStock =
@@ -56,8 +59,15 @@ export async function scrapeAmazonProduct(url: string) {
     const currency = extractCurrency($(".a-price-symbol"));
     const discountRate = $(".savingsPercentage").text().replace(/[-%]/g, "");
 
+    const reviewsCount = $("#acrCustomerReviewText").text().replace(/\D/g, "");
+   
+    const stars = $("span.a-size-base.a-color-base")
+      .text()
+      .replace(/\D/g, "");
+
     const description = extractDescription($);
-    
+
+
     const data = {
       url,
       currency: currency || "$",
@@ -68,13 +78,13 @@ export async function scrapeAmazonProduct(url: string) {
       priceHistory: [],
       discountRate: Number(discountRate),
       category: "category",
-      reviewsCount: 100,
-      stars: 4.5,
+      reviewsCount: Number(reviewsCount),
+      stars: Number(stars),
       isOutOfStock: outOfStock,
       description,
       lowestPrice: Number(currentPrice) || Number(originalPrice),
       highestPrice: Number(originalPrice) || Number(currentPrice),
-      averagePrice: Number(currentPrice) || Number(originalPrice),
+      averagePrice: (Number(currentPrice) + Number(originalPrice)) / 2,
     };
 
     return data;
