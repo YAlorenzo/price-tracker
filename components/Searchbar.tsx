@@ -38,9 +38,7 @@ const Searchbar = ({}) => {
     try {
       setIsLoading(true);
       const product = await scrapeAndStoreProduct(searchPrompt);
-
-      // router.push(`/products/${product._id}`);
-
+      router.push(`/products/${product._id}`);
     } catch (error) {
       console.log(error);
     } finally {

@@ -44,8 +44,8 @@ const HeroCarousel = () => {
           <Image
             src={image.imgUrl}
             alt={image.alt}
-            width={484}
-            height={484}
+            width={400}
+            height={400}
             className="object-contain"
             key={image.alt}
           />

@@ -134,6 +134,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               <PriceInfoCard
                 title="Current Price"
                 iconSrc="/assets/icons/price-tag.svg"
+                border="border-l-[#72b9ff]"
                 value={`${product.currency} ${formatNumber(
                   product.currentPrice
                 )}`}
@@ -141,6 +142,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               <PriceInfoCard
                 title="Average Price"
                 iconSrc="/assets/icons/chart.svg"
+                border="border-l-[#8c61ff]"
                 value={`${product.currency} ${formatNumber(
                   product.averagePrice
                 )}`}
@@ -148,6 +150,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               <PriceInfoCard
                 title="Highest Price"
                 iconSrc="/assets/icons/arrow-up.svg"
+                border="border-l-[#ff2c2c]"
                 value={`${product.currency} ${formatNumber(
                   product.highestPrice
                 )}`}
@@ -155,6 +158,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               <PriceInfoCard
                 title="Lowest Price"
                 iconSrc="/assets/icons/arrow-down.svg"
+                border="border-l-[#23ff39]"
                 value={`${product.currency} ${formatNumber(
                   product.lowestPrice
                 )}`}
@@ -166,7 +170,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-16 ">
         <div className="flex flex-col gap-5">
           <h3 className="text-2xl text-secondary font-semibold">
             Product Description

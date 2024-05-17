@@ -29,6 +29,15 @@ export function extractPrice(...elements: any) {
   return "";
 }
 
+export function extractStars(element: any) {
+
+  const starsText = element.text();
+  const starsMatch = starsText.match(/\d+\.\d+/);
+  const stars = starsMatch ? starsMatch[0] : "";
+
+  return stars;
+}
+
 export function extractDiscountRate(element: any): number {
   const discountMatches = element.text().match(/\d+/g);
 
