@@ -6,7 +6,8 @@ import { getAveragePrice, getEmailNotifType, getHighestPrice, getLowestPrice } f
 import { NextResponse } from "next/server";
 
 // export const maxDuration = 60;
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
+
 export const revalidate = 0;
 
 
