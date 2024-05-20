@@ -3,9 +3,7 @@
 import { scrapeAndStoreProduct } from "@/lib/actions";
 import { FormEvent, useState } from "react";
 
-import { useRouter } from "next/navigation";
-
-const isValidAmaazonProductURL = (url: string) => {
+const isValidAmazonProductURL = (url: string) => {
   try {
     const parsedURL = new URL(url);
     const hostname = parsedURL.hostname;
@@ -13,36 +11,36 @@ const isValidAmaazonProductURL = (url: string) => {
     if (
       hostname.includes("amazon.com") ||
       hostname.includes("amazon.") ||
-      hostname.includes("amazon")
+      hostname.endsWith("amazon")
     ) {
       return true;
     }
   } catch (error) {
     return false;
   }
+
   return false;
 };
 
-const Searchbar = ({}) => {
-  const router = useRouter();
-  const [searchPrompt, setsearchPrompt] = useState("");
+const Searchbar = () => {
+  const [searchPrompt, setSearchPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const isValidLink = isValidAmaazonProductURL(searchPrompt);
+    const isValidLink = isValidAmazonProductURL(searchPrompt);
 
-    if (!isValidLink) return alert("Pleas provide a valid Amazon link!");
+    if (!isValidLink) return alert("Please provide a valid Amazon link");
 
     try {
       setIsLoading(true);
+
+      // Scrape the product page
       const product = await scrapeAndStoreProduct(searchPrompt);
-      router.push(`/products/${product._id}`);
     } catch (error) {
       console.log(error);
     } finally {
-     
       setIsLoading(false);
     }
   };
@@ -51,11 +49,12 @@ const Searchbar = ({}) => {
     <form className="flex flex-wrap gap-4 mt-12" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Enter amazon product link"
-        className="searchbar-input"
         value={searchPrompt}
-        onChange={(e) => setsearchPrompt(e.target.value)}
+        onChange={(e) => setSearchPrompt(e.target.value)}
+        placeholder="Enter product link"
+        className="searchbar-input"
       />
+
       <button
         type="submit"
         className="searchbar-btn"
