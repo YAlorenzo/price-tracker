@@ -6,6 +6,7 @@ Amazon Price Tracker is a web application that allows users to track prices of p
 
 ## Features
 
+
 - **Web Scraping**: Gather product information from Amazon, including the current price.
 - **Email Subscription**: Users can subscribe to receive email notifications about price changes.
 - **User-Friendly Interface**: Intuitive and stylish interface built with Tailwind CSS.
