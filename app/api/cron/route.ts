@@ -6,7 +6,7 @@ import { getAveragePrice, getEmailNotifType, getHighestPrice, getLowestPrice } f
 import { NextResponse } from "next/server";
 
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 
 export async function GET() {
