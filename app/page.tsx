@@ -6,6 +6,7 @@ import React from 'react'
 import ProductCard from '@/components/ProductCard';
 
 const Home = async () => {
+  
   const allProducts = await getAllProducts();
   
   return (

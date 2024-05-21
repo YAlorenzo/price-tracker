@@ -65,13 +65,12 @@ export async function getProductById(productId: string) {
 
 export async function getAllProducts() {
   try {
-    connectToDB();
+    await connectToDB();
 
     const products = await Product.find();
-
     console.log(products);
-
     return products;
+
   } catch (error) {
     console.log(error);
   }
