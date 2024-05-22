@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { getAllProducts } from '@/lib/actions';
 import React, { useEffect } from 'react'
 import ProductCard from '@/components/ProductCard';
-import { revalidatePath } from 'next/cache';
 
 const Home = async () => {
   

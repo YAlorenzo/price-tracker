@@ -1,4 +1,3 @@
-
 import { NextResponse } from "next/server";
 import {
   getLowestPrice,
@@ -11,7 +10,6 @@ import Product from "@/lib/models/product.model";
 import { scrapeAmazonProduct } from "@/lib/scraper";
 import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
 
-// export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
