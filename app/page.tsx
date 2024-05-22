@@ -8,6 +8,7 @@ import ProductCard from '@/components/ProductCard';
 const Home = async () => {
   
   const allProducts = await getAllProducts();
+  console.log(allProducts);
   
   return (
     <>
