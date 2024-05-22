@@ -2,14 +2,15 @@ import HeroCarousel from '@/components/HeroCarousel';
 import Searchbar from '@/components/Searchbar';
 import Image from 'next/image'
 import { getAllProducts } from '@/lib/actions';
-import React from 'react'
+import React, { useEffect } from 'react'
 import ProductCard from '@/components/ProductCard';
+import { revalidatePath } from 'next/cache';
 
 const Home = async () => {
   
   const allProducts = await getAllProducts();
   console.log(allProducts);
-  
+
   return (
     <>
       <section className="px-6 md:px-20 py-24">
