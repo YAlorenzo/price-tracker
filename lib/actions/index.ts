@@ -66,7 +66,7 @@ export async function getProductById(productId: string) {
 
 export async function getAllProducts() {
   try {
-    await connectToDB();
+    connectToDB();
 
     const products = await Product.find();
     console.log(products);
