@@ -44,10 +44,13 @@ export async function scrapeAndStoreProduct(productUrl: string) {
       { upsert: true, new: true }
     );
 
-
+  
+    if (!newProduct || !newProduct._id) return undefined;
+    
     revalidatePath(`/products/${newProduct._id}`);
 
-    return newProduct;
+     return `/products/${newProduct._id}`;
+    
     
   } catch (error: any) {
     throw new Error(`Failed to create/update product: ${error.message}`);
@@ -75,7 +78,6 @@ export async function getAllProducts() {
     const products = await Product.find();
 
     revalidatePath('/');
-    console.log(products);
     return products;
 
   } catch (error) {
