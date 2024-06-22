@@ -63,6 +63,14 @@ export async function scrapeAmazonProduct(url: string) {
    
     const stars = extractStars($("span.a-size-base.a-color-base"));
 
+    const averagePriceCount = () => {
+      if (Number(currentPrice) !== 0) {
+        return (Number(currentPrice) + Number(originalPrice)) / 2;
+      } else {
+       return originalPrice
+      }
+    }
+
     // const category = $("span.ac-for-text").text().trim();
 
     const description = extractDescription($);
@@ -82,6 +90,8 @@ export async function scrapeAmazonProduct(url: string) {
       title,
       currentPrice: Number(currentPrice) || Number(originalPrice),
       originalPrice: Number(originalPrice) || Number(currentPrice),
+      // currentPrice,
+      // originalPrice,
       priceHistory: [],
       discountRate: Number(discountRate),
       category: "category",
@@ -91,10 +101,10 @@ export async function scrapeAmazonProduct(url: string) {
       description,
       lowestPrice,
       highestPrice,
-      averagePrice: (Number(currentPrice) + Number(originalPrice)) / 2,
+      averagePrice: averagePriceCount(),
     };
 
-    console.log(data);
+    console.log(originalPrice, currentPrice);
 
     return data;
   } catch (error: any) {
